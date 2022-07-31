@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+  webapi:
+    image: ${DOCKER_REGISTRY-}webapi
+    build:
+      context: .
+      dockerfile: src/WebApi/Dockerfile
+    ports:
+      - "5104:443"
+      - "5103:80"
+    domainname: crm-profile
+    hostname: crm-profile
+    networks:
+       vpcbr:
+            ipv4_address: 10.5.0.7
+            aliases:
+            - crm-profile
+    environment:
+        - ConnectionStrings__DefaultConnection=Host=postgres;Database=nikan_services_crm_profile;Username=postgres;Password=123
+    volumes:
+        - ${APPDATA}/ASP.NET/DataProtectionKeys:/root/.aspnet/DataProtection-Keys:rw
