@@ -1,7 +1,9 @@
-﻿using System.Configuration;
+﻿using System.Reflection;
 using Ardalis.ListStartupServices;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using AutoMapper;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Nikan.Service.CRM.Profiles.WebApi.MiddleWares;
@@ -9,7 +11,8 @@ using Nikan.Services.Reports.Core;
 using Nikan.Services.Reports.Infrastructure;
 using Nikan.Services.Reports.Infrastructure.Data;
 using Nikan.Services.Reports.Infrastructure.Options;
-using Nikan.Services.Reports.WebApi;
+using Nikan.Services.Reports.WebApi.Adaptors.AccountAdaptor.Service;
+using Nikan.Services.Reports.WebApi.Infrastructure;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,7 +25,7 @@ builder.Services.AddSingleton(basicDataServiceConfiguration);
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
 builder.Host.UseSerilog((_, config) => config.ReadFrom.Configuration(builder.Configuration));
-
+builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
   options.CheckConsentNeeded = context => true;
@@ -40,6 +43,17 @@ builder.Services.AddCors(options =>
 builder.Services.AddDbContext(connectionString);
 builder.Services.AddControllersWithViews().AddNewtonsoftJson();
 builder.Services.AddGrpc();
+
+var config = new MapperConfiguration(cfg =>
+{
+  cfg.AddProfile(new MappingProfile());
+
+});
+
+var mapper = config.CreateMapper();
+builder.Services.AddSingleton(mapper);
+
+
 builder.Services.AddSwaggerGen(c =>
 {
   c.SwaggerDoc("v1", new OpenApiInfo { Title = "Nikan Services CRM Profiles", Version = "v1" });
@@ -58,7 +72,7 @@ builder.Services.Configure<ServiceConfig>(config =>
 
 builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
 {
-  ;
+
 
   containerBuilder.RegisterModule(new DefaultCoreModule());
   containerBuilder.RegisterModule(
@@ -99,7 +113,7 @@ app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Nikan Servi
 app.UseEndpoints(endpoints =>
 {
   endpoints.MapDefaultControllerRoute();
-
+  endpoints.MapGrpcService<GRPCAccountService>();
 
 });
 
