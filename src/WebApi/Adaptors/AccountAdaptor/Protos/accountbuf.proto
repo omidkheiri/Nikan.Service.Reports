@@ -1,0 +1,30 @@
+syntax = "proto3";
+import "google/protobuf/duration.proto";  
+import "google/protobuf/timestamp.proto";
+option csharp_namespace = "Nikan.Services.Reports.WebApi.Adaptors.AccountAdaptor";
+
+package accountbuf;
+service AccountService {
+  // Sends an AddAccount
+  rpc AddAccount (AddAccountRequest) returns (AddAccountReply);
+}
+
+ message AddAccountRequest {
+  
+  string CompanyId =1;
+  string AccountId=2;
+  int32 AccountNumber =3;
+  string Title =4;
+  string Phone =5;
+  string EmailAddress =6;
+  string PostalAddress =7;
+  google.protobuf.Timestamp DateCreated =8;
+  google.protobuf.Timestamp DateModified =9;
+  string CreatedById =10;
+  string CreatedBy =11;
+  bool IsCustomer =12;
+  bool IsSupplier =13;
+}
+message AddAccountReply {
+  string message = 1;
+}

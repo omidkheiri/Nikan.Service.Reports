@@ -23,6 +23,7 @@ namespace Nikan.Services.Reports.Infrastructure.Migrations
                     PostalAddress = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
                     DateCreated = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     DateModified = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: false),
                     IsCustomer = table.Column<bool>(type: "boolean", nullable: false),
                     IsSupplier = table.Column<bool>(type: "boolean", nullable: false)
