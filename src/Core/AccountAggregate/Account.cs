@@ -35,12 +35,13 @@ public class Account : EntityBase
   public Guid CompanyId { get; private set; }
   public Guid AccountId { get; private set; }
   public int AccountNumber { get; private set; }
-  public string Title { get; private set; } = string.Empty;
-  public string Phone { get; private set; } = string.Empty;
-  public string EmailAddress { get; private set; } = string.Empty;
-  public string? PostalAddress { get; private set; } = string.Empty;
+  public string Title { get; private set; }
+  public string Phone { get; private set; }
+  public string EmailAddress { get; private set; }
+  public string? PostalAddress { get; private set; }
   public DateTimeOffset DateCreated { get; private set; }
   public DateTimeOffset DateModified { get; private set; }
+  public Guid CreatedById { get; private set; }
   public string CreatedBy { get; private set; }
   public bool IsCustomer { get; private set; }
   public bool IsSupplier { get; private set; }

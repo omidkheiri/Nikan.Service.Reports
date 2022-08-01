@@ -41,6 +41,9 @@ namespace Nikan.Services.Reports.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<Guid>("CreatedById")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTimeOffset>("DateCreated")
                         .HasColumnType("timestamp with time zone");
 
