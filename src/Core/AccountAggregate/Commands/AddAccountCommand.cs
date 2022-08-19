@@ -12,6 +12,4 @@ public record AddAccountCommand(Guid CompanyId,
  DateTimeOffset DateCreated,
  DateTimeOffset DateModified,
  Guid CreatedById,
- string CreatedBy,
- bool IsCustomer,
- bool IsSupplier) : IRequest<Account>;
+ string CreatedBy) : IRequest<Account>;

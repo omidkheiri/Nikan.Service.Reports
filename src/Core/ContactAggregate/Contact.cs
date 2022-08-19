@@ -1,65 +1,62 @@
 ﻿using Ardalis.GuardClauses;
 using Nikan.Services.Reports.SharedKernel;
 
-namespace Nikan.Services.Reports.Core.AccountAggregate;
+namespace Nikan.Services.Reports.Core.ContactAggregate;
 
-public class Account : EntityBase
+public class Contact : EntityBase
 {
-  public Account(Guid companyId,
+
+  protected Contact()
+  {
+
+  }
+  public Contact(Guid companyId,
     int accountNumber,
-    string title,
+    int contactNumber,
+    string name, string lastName,
     string phone,
     string emailAddress,
-    string? postalAddress,
+    string accountTitle,
     DateTimeOffset dateCreated,
     DateTimeOffset dateModified,
     string createdBy,
-    bool isCustomer,
-    bool isSupplier,
-    Guid accountId)
+    Guid accountId, DateTimeOffset? birthDate, Guid contactId) : base()
   {
     CompanyId = companyId;
     AccountNumber = accountNumber;
-    Title = title;
+    ContactNumber = contactNumber;
+    Name = name;
+    LastName = lastName;
     Phone = phone;
     EmailAddress = emailAddress;
-    PostalAddress = postalAddress;
+    AccountTitle = accountTitle;
     DateCreated = dateCreated;
     DateModified = dateModified;
     CreatedBy = createdBy;
-    IsCustomer = isCustomer;
-    IsSupplier = isSupplier;
+    
     AccountId = accountId;
+    if(birthDate != null)
+    BirthDate = birthDate.Value;
+    ContactId = contactId;
   }
 
   public Guid CompanyId { get; private set; }
+  public Guid ContactId { get; private set; }
   public Guid AccountId { get; private set; }
   public int AccountNumber { get; private set; }
-  public string Title { get; private set; }
+  public int ContactNumber { get; private set; }
+  public string Name { get; private set; }
+  public string AccountTitle { get; private set; }
+  public string LastName { get; private set; }
   public string Phone { get; private set; }
   public string EmailAddress { get; private set; }
-  public string? PostalAddress { get; private set; }
+  public DateTimeOffset BirthDate { get; private set; }
   public DateTimeOffset DateCreated { get; private set; }
   public DateTimeOffset DateModified { get; private set; }
   public Guid CreatedById { get; private set; }
   public string CreatedBy { get; private set; }
-  public bool IsCustomer { get; private set; }
-  public bool IsSupplier { get; private set; }
+  
 
-  public void SetIsSupplier(bool isSuppler)
-  {
-
-    IsSupplier = isSuppler;
-
-
-  }
-  public void SetIsCustomer(bool isCustomer)
-  {
-
-    IsCustomer = isCustomer;
-
-
-  }
 
 
 

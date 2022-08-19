@@ -1,0 +1,38 @@
+syntax = "proto3";
+import "google/protobuf/duration.proto";  
+import "google/protobuf/timestamp.proto";
+option csharp_namespace = "Nikan.Services.Reports.WebApi.Adaptors.ContactAdaptor";
+
+package contactbuf;
+service ContactService {
+  // Sends an AddContact
+  rpc AddContact (AddContactRequest) returns (AddContactReply);
+}
+
+
+
+
+
+
+ message AddContactRequest {
+  
+  string CompanyId =1;// TODO : Correct the crm.profiel
+  string ContactId=2;
+  int32 ContactNumber =3;
+  string Name =4;
+  string LastName =5;
+  string Phone =6;
+  string EmailAddress =7;
+  
+  google.protobuf.Timestamp BirthDate =8;
+  google.protobuf.Timestamp DateCreated =9;
+  google.protobuf.Timestamp DateModified =10;
+  string CreatedById =11;
+  string CreatedBy =12;
+  int32 AccountNumber=13;
+  string AccountTitle=14;
+  string AccountId=15;
+}
+message AddContactReply {
+  string message = 1;
+}

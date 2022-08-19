@@ -21,15 +21,16 @@ public class AddAccountCommandHandler : IRequestHandler<AddAccountCommand, Accou
     try
     {
       _appDbContext.Accounts.Add(account);
-      _appDbContext.SaveChanges();
+      await _appDbContext.SaveChangesAsync();
       return account;
     }
     catch (Exception ex)
     {
-      var message = ex.Message;
-
+      var e = ex;
       throw;
     }
+   
+
 
   }
 }

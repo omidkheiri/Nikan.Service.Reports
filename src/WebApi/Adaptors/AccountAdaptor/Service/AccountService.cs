@@ -17,7 +17,7 @@ public class GRPCAccountService : AccountServiceBase
     _mediator = mediator;
   }
 
-  public override Task<AddAccountReply> AddAccount(AddAccountRequest request, ServerCallContext context)
+  public override async Task<AddAccountReply> AddAccount(AddAccountRequest request, ServerCallContext context)
   {
     var command = new AddAccountCommand(Guid.Parse(request.CompanyId),
       Guid.Parse(request.AccountId),
@@ -29,16 +29,35 @@ public class GRPCAccountService : AccountServiceBase
       request.DateCreated.ToDateTimeOffset(),
       request.DateModified.ToDateTimeOffset(),
       Guid.Parse(request.CreatedById),
-      request.CreatedBy,
-      request.IsCustomer,
-      request.IsSupplier);
-    var item = _mediator.Send(command);
+      request.CreatedBy);
+    var item = await _mediator.Send(command);
 
 
-    return Task.FromResult(new AddAccountReply
+    return new AddAccountReply
     {
       Message = "OK"
-    });
+    };
   }
+  public override async Task<SetAccountIsCustomerResponse> SetAccountIsCustomer(SetAccountIsCustomerRequest request, ServerCallContext context)
+  {
+    var command = new SetAccountIsCustomerCommand(Guid.Parse(request.AccountId), Guid.Parse(request.CompanyId), request.IsCustomer);
+    var item = await _mediator.Send(command);
 
+
+    return new SetAccountIsCustomerResponse
+    {
+      Message = "OK"
+    };
+  }
+  public override async Task<SetAccountIsSupplierResponse> SetAccountIsSupplier(SetAccountIsSupplierRequest request, ServerCallContext context)
+  {
+    var command = new SetAccountIsSupplierCommand(Guid.Parse(request.AccountId), Guid.Parse(request.CompanyId), request.IsSupplier);
+    var item = await _mediator.Send(command);
+
+
+    return new SetAccountIsSupplierResponse
+    {
+      Message = "OK"
+    };
+  }
 }
