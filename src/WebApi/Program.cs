@@ -12,6 +12,7 @@ using Nikan.Services.Reports.Infrastructure;
 using Nikan.Services.Reports.Infrastructure.Data;
 using Nikan.Services.Reports.Infrastructure.Options;
 using Nikan.Services.Reports.WebApi.Adaptors.AccountAdaptor.Service;
+using Nikan.Services.Reports.WebApi.Adaptors.ContactAdaptor.Service;
 using Nikan.Services.Reports.WebApi.Infrastructure;
 using Serilog;
 
@@ -114,7 +115,8 @@ app.UseEndpoints(endpoints =>
 {
   endpoints.MapDefaultControllerRoute();
   endpoints.MapGrpcService<GRPCAccountService>();
-
+  endpoints.MapGrpcService<GRPCContactService>();
+  
 });
 
 // Seed Database

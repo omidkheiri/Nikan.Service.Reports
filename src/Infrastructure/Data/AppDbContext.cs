@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Nikan.Services.Reports.Core.AccountAggregate;
+using Nikan.Services.Reports.Core.ContactAggregate;
 using Nikan.Services.Reports.SharedKernel;
 using Nikan.Services.Reports.SharedKernel.Interfaces;
 
@@ -20,10 +21,8 @@ public class AppDbContext : DbContext
   }
 
 
-  //public DbSet<ToDoItem> ToDoItems => Set<ToDoItem>();
-  //public DbSet<Project> Projects => Set<Project>();
-
   public DbSet<Account> Accounts => Set<Account>();
+  public DbSet<Contact> Conatcts => Set<Contact>();
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
